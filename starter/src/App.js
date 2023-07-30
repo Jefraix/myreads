@@ -7,7 +7,7 @@ import SearchBooks from "./Components/SearchBooksPage/SearchBooks"
 import ListBooks from "./Components/ListBooksPage/ListBooks";
 
 function App() {
-  const [currentlyReading, SetCurrentlyReading] = useState([
+  const currentlyReadingList = [
     {
       title: 'To Kill a Mockingbird',
       author: 'Harper Lee',
@@ -26,9 +26,8 @@ function App() {
         image: 'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")',
       }
     },
-  ])
-
-  const [wantToRead, SetWantToRead] = useState([
+  ]
+  const wantToReadList = [
     {
       title: '1776',
       author: 'David McCullough',
@@ -47,9 +46,8 @@ function App() {
         image: 'url("http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72G3gA5A-Ka8XjOZGDFLAoUeMQBqZ9y-LCspZ2dzJTugcOcJ4C7FP0tDA8s1h9f480ISXuvYhA_ZpdvRArUL-mZyD4WW7CHyEqHYq9D3kGnrZCNiqxSRhry8TiFDCMWP61ujflB&source=gbs_api")',
       }
     },
-  ])
-
-  const [read, SetRead] = useState([
+  ]
+  const readList = [
     {
       title: 'The Hobbit',
       author: 'J.R.R. Tolkien',
@@ -77,7 +75,59 @@ function App() {
         image: 'url("http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api")',
       }
     },
-  ])
+  ]
+
+  const [currentlyReading, SetCurrentlyReading] = useState(currentlyReadingList)
+  const [wantToRead, SetWantToRead] = useState(wantToReadList)
+  const [read, SetRead] = useState(readList)
+
+  const addTo = (bookshelf, book) => {
+    switch (bookshelf) {
+      case 'Currently Reading':
+        SetCurrentlyReading([...currentlyReading, book])
+        break
+      case 'Want To Read':
+        SetWantToRead([...wantToRead, book])
+        break
+      case 'Read':
+        SetRead([...read, book])
+        break
+      default:
+        console.log("Unknown bookshelf chosen to add to")
+    }
+  }
+
+  const removeFrom = (bookshelf, book) => {
+    switch (bookshelf) {
+      case 'Currently Reading':
+        SetCurrentlyReading(currentlyReading.filter(b => b.title !== book.title))
+        break
+      case 'Want To Read':
+        SetWantToRead(wantToRead.filter(b => b.title !== book.title))
+        break
+      case 'Read':
+        SetRead(read.filter(b => b.title !== book.title))
+        break
+      default:
+        console.log("Unknown bookshelf chosen to remove from")
+    }
+  }
+
+  const onBookshelfChange = (book, currentBookshelf, newBookshelf) => {
+    if (currentBookshelf === newBookshelf) {
+      console.log("Tried changing to current bookshelf")
+      return
+    }
+
+    if (currentBookshelf === 'none') {
+      addTo(newBookshelf, book)
+    } else if (newBookshelf === 'none') {
+      removeFrom(currentBookshelf, book)
+    } else {
+      removeFrom(currentBookshelf, book)
+      addTo(newBookshelf, book)
+    }
+  }
 
   return (
     <Routes className="app">
@@ -86,10 +136,16 @@ function App() {
           currentlyReading={currentlyReading}
           wantToRead={wantToRead}
           read={read}
+          OnBookshelfChange={onBookshelfChange}
         />
       }/>
       <Route path="/search" element={
-        <SearchBooks />
+        <SearchBooks 
+          currentlyReading={currentlyReading}
+          wantToRead={wantToRead}
+          read={read}
+          OnBookshelfChange={onBookshelfChange}
+        />
       }/>
     </Routes>
   );

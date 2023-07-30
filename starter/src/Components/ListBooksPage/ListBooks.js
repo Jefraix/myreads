@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Bookshelf from "./Bookshelf"
-
-const ListBooks = ({ currentlyReading, wantToRead, read }) => {
+//amogus
+const ListBooks = ({ currentlyReading, wantToRead, read, OnBookshelfChange }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -9,9 +9,21 @@ const ListBooks = ({ currentlyReading, wantToRead, read }) => {
       </div>
       <div className="list-books-content">
         <div>
-          <Bookshelf title="Currently Reading" BookshelfBooks={currentlyReading} />
-          <Bookshelf title="Want to Read" BookshelfBooks={wantToRead} />
-          <Bookshelf title="Read" BookshelfBooks={read} />
+          <Bookshelf 
+            title="Currently Reading" 
+            Books={currentlyReading}
+            OnBookshelfChange={OnBookshelfChange}
+          />
+          <Bookshelf 
+            title="Want To Read" 
+            Books={wantToRead}
+            OnBookshelfChange={OnBookshelfChange}
+          />
+          <Bookshelf 
+            title="Read" 
+            Books={read}
+            OnBookshelfChange={OnBookshelfChange}
+          />
         </div>
       </div>
       <div className="open-search">

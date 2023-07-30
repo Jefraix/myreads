@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const SearchBooks = () => {
+const SearchBooks = ({ currentlyReading, wantToRead, read }) => {
   return (
     <div className="search-books">
       <div className="search-books-bar">
