@@ -1,30 +1,26 @@
-import { useState } from "react";
-
-const BookshelfChanger = ({currentBookshelf, OnBookshelfChangerChange }) => {
-  const [selectedBookshelf, SetSelectedBookshelf] = useState(currentBookshelf)
+const BookshelfChanger = ({ currentBookshelf, OnBookshelfChangerChange }) => {
 
   const onSelectChange = (event) => {
-    const previousSelection = selectedBookshelf
+    const previousSelection = currentBookshelf
     const newSelection = event.target.value
 
-    SetSelectedBookshelf(newSelection)
     OnBookshelfChangerChange(previousSelection, newSelection)
   }
 
   return (
     <div className="book-shelf-changer">
       <select
-        value={selectedBookshelf}
+        value={currentBookshelf}
         onChange={onSelectChange}
       >
         <option value="none" disabled>
           Move to...
         </option>
-        <option value="Currently Reading">
+        <option value="currentlyReading">
           Currently Reading
         </option>
-        <option value="Want To Read">Want to Read</option>
-        <option value="Read">Read</option>
+        <option value="wantToRead">Want to Read</option>
+        <option value="read">Read</option>
         <option value="none">None</option>
       </select>
     </div>

@@ -1,6 +1,6 @@
 import Book from "../Book"
 
-const Bookshelf = ({ title, Books, OnBookshelfChange }) => {
+const Bookshelf = ({ title, Books = [], OnBookshelfChange }) => {
 
   return (
     <div className="bookshelf">
@@ -11,8 +11,7 @@ const Bookshelf = ({ title, Books, OnBookshelfChange }) => {
             return (
               <li key={idx}>
                 <Book 
-                  Book={book} 
-                  Bookshelf={title}
+                  Book={book}
                   OnBookshelfChange={OnBookshelfChange}
                 />
               </li>

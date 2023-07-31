@@ -1,11 +1,11 @@
-const BookCover = ({ cover }) => {
+const BookCover = ({ imageURL }) => {
   return (
     <div
       className="book-cover"
       style={{
-        width: cover.width,
-        height: cover.height,
-        backgroundImage: cover.image,
+        width: 128,
+        height: 193,
+        backgroundImage: `url(${imageURL})`,
       }}
     ></div>
   )

@@ -9,6 +9,10 @@ const headers = {
   Authorization: token,
 };
 
+export const status = () =>
+  fetch(`${api}/status`, { headers })
+    .then(res => res.json())
+
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })
     .then((res) => res.json())

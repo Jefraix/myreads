@@ -1,22 +1,26 @@
 import BookCover from "./BookCover"
 import BookshelfChanger from "./BookshelfChanger"
 
-const Book = ({ Book, Bookshelf, OnBookshelfChange }) => {
+const Book = ({ Book, OnBookshelfChange }) => {
+
   const onBookshelfChangerChange = (previousSelection, newSelection) => {
-    OnBookshelfChange(Book, previousSelection, newSelection)
+    const newBook = Object.assign({}, Book, { shelf: newSelection })
+    OnBookshelfChange(newBook, previousSelection, newSelection)
   }
 
   return (
     <div className="book">
       <div className="book-top">
-        <BookCover cover={Book.cover}/>
+        <BookCover imageURL={Book.imageURL}/>
         <BookshelfChanger 
-          currentBookshelf={Bookshelf}
+          currentBookshelf={Book.shelf}
           OnBookshelfChangerChange={onBookshelfChangerChange}
         />
       </div>
       <div className="book-title">{Book.title}</div>
-      <div className="book-authors">{Book.author}</div>
+      <div className="book-authors">
+        {Book.authors.map((author, idx) => <p key={idx}>{author}</p>)}
+      </div>
     </div>
   )
 }

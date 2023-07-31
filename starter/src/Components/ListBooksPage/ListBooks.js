@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Bookshelf from "./Bookshelf"
 //amogus
-const ListBooks = ({ currentlyReading, wantToRead, read, OnBookshelfChange }) => {
+const ListBooks = ({ shelfs, OnBookshelfChange }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -9,19 +9,19 @@ const ListBooks = ({ currentlyReading, wantToRead, read, OnBookshelfChange }) =>
       </div>
       <div className="list-books-content">
         <div>
-          <Bookshelf 
+        <Bookshelf 
             title="Currently Reading" 
-            Books={currentlyReading}
+            Books={shelfs['currentlyReading']}
             OnBookshelfChange={OnBookshelfChange}
           />
           <Bookshelf 
             title="Want To Read" 
-            Books={wantToRead}
+            Books={shelfs['wantToRead']}
             OnBookshelfChange={OnBookshelfChange}
           />
           <Bookshelf 
             title="Read" 
-            Books={read}
+            Books={shelfs['read']}
             OnBookshelfChange={OnBookshelfChange}
           />
         </div>
