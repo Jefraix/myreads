@@ -23,34 +23,39 @@ function App() {
     SetShelfs(shelfsObj)
   }
 
+  const updateBook = async (bookshelf, book, SetState) => {
+    const res = await BooksAPI.update(book, bookshelf)
+    console.log(res)
+
+    SetState()
+  }
+
   const addTo = (bookshelf, book) => {
     const newShelf = [...shelfs[bookshelf], book]
     const newShelfsObject = Object.assign({}, shelfs, { [bookshelf]: newShelf })
 
-    SetShelfs(newShelfsObject)
+    updateBook(bookshelf, book, () => SetShelfs(newShelfsObject))
   }
 
   const removeFrom = (bookshelf, book) => {
     const newShelf = shelfs[bookshelf].filter(b => b.id !== book.id)
     const newShelfsObject = Object.assign({}, shelfs, { [bookshelf]: newShelf })
 
-    SetShelfs(newShelfsObject)
+    updateBook("none", book, () => SetShelfs(newShelfsObject))
   }
 
   const swapBookshelfs = (oldBookshelf, newBookshelf, book) => {
     const oldShelf = shelfs[oldBookshelf].filter(b => b.id !== book.id)
     const newShelf = [...shelfs[newBookshelf], book]
 
-    const newShelfsObject = Object.assign(
-      {}, 
-      shelfs, 
+    const newShelfsObject = Object.assign({}, shelfs, 
       { 
         [newBookshelf]: newShelf, 
         [oldBookshelf]: oldShelf 
       }
     )
 
-    SetShelfs(newShelfsObject)
+    updateBook(newBookshelf, book, () => SetShelfs(newShelfsObject))
   }
 
   const onBookshelfChange = (book, currentBookshelf, newBookshelf) => {
@@ -80,6 +85,8 @@ function App() {
           imageURL: book.imageLinks.thumbnail
         }
       })
+      console.log(myBooks)
+
       arrangeShelfs(myBooks)
     }
 
