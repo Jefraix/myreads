@@ -11,6 +11,7 @@ function App() {
   localStorage.token = "jaguilera-udacity" 
 
   const [shelfs, SetShelfs] = useState({})
+  const [mappings, SetMappings] = useState({})
 
   const arrangeShelfs = (books) => {
     const shelfsObj = {
@@ -21,6 +22,20 @@ function App() {
 
     books.forEach(book => shelfsObj[book.shelf].push(book))
     SetShelfs(shelfsObj)
+
+    return shelfsObj
+  }
+
+  const mapBookIDs = (shelfsObj) => {
+    let idMappings = {}
+
+    Object.keys(shelfsObj).forEach(bookshelf =>
+      shelfsObj[bookshelf].forEach(book =>
+        idMappings = Object.assign({}, idMappings, { [book.id]: bookshelf })
+      )
+    )
+
+    SetMappings(idMappings)
   }
 
   const updateBook = async (bookshelf, book, SetState) => {
@@ -34,14 +49,20 @@ function App() {
     const newShelf = [...shelfs[bookshelf], book]
     const newShelfsObject = Object.assign({}, shelfs, { [bookshelf]: newShelf })
 
-    updateBook(bookshelf, book, () => SetShelfs(newShelfsObject))
+    updateBook(bookshelf, book, () => {
+      mapBookIDs(newShelfsObject)
+      SetShelfs(newShelfsObject)
+    })
   }
 
   const removeFrom = (bookshelf, book) => {
     const newShelf = shelfs[bookshelf].filter(b => b.id !== book.id)
     const newShelfsObject = Object.assign({}, shelfs, { [bookshelf]: newShelf })
 
-    updateBook("none", book, () => SetShelfs(newShelfsObject))
+    updateBook("none", book, () => {
+      mapBookIDs(newShelfsObject)
+      SetShelfs(newShelfsObject)
+    })
   }
 
   const swapBookshelfs = (oldBookshelf, newBookshelf, book) => {
@@ -55,7 +76,10 @@ function App() {
       }
     )
 
-    updateBook(newBookshelf, book, () => SetShelfs(newShelfsObject))
+    updateBook(newBookshelf, book, () => {
+      mapBookIDs(newShelfsObject)
+      SetShelfs(newShelfsObject)
+    })
   }
 
   const onBookshelfChange = (book, currentBookshelf, newBookshelf) => {
@@ -85,9 +109,8 @@ function App() {
           imageURL: book.imageLinks.thumbnail
         }
       })
-      console.log(myBooks)
 
-      arrangeShelfs(myBooks)
+      mapBookIDs(arrangeShelfs(myBooks))
     }
 
     getMyBooks()
@@ -103,7 +126,7 @@ function App() {
       }/>
       <Route path="/search" element={
         <SearchBooks 
-          shelfs={shelfs}
+          bookidMappings={mappings}
           OnBookshelfChange={onBookshelfChange}
         />
       }/>
