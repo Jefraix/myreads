@@ -25,14 +25,22 @@ const SearchBooks = ({ bookidMappings, OnBookshelfChange }) => {
           }
         })
 
-        console.log(resBooks)
-
         SetBookResults(resBooks)
       }
     }
 
     if (query !== "") performSearch()
     SetQuery(query)
+  }
+
+  const onBookshelfChangeInResults = (newBook, previousSelection, newSelection) => {
+    const newResults = bookResults.map(book => {
+      if (book.id === newBook.id) book.shelf = newSelection
+      return book
+    })
+
+    SetBookResults(newResults)
+    OnBookshelfChange(newBook, previousSelection, newSelection)
   }
 
   return (
@@ -54,7 +62,7 @@ const SearchBooks = ({ bookidMappings, OnBookshelfChange }) => {
             <li key={idx}>
               <Book 
                 Book={book}
-                OnBookshelfChange={OnBookshelfChange}
+                OnBookshelfChange={onBookshelfChangeInResults}
               />
             </li>
           )}

@@ -39,9 +39,7 @@ function App() {
   }
 
   const updateBook = async (bookshelf, book, SetState) => {
-    const res = await BooksAPI.update(book, bookshelf)
-    console.log(res)
-
+    await BooksAPI.update(book, bookshelf)
     SetState()
   }
 
