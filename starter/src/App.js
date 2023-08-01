@@ -104,13 +104,14 @@ function App() {
         return {
           id: book.id,
           title: book.title,
-          authors: book.authors,
+          authors: book.authors ?? [],
           shelf: book.shelf,
-          imageURL: book.imageLinks.thumbnail
+          imageURL: book.imageLinks?.thumbnail
         }
       })
 
-      mapBookIDs(arrangeShelfs(myBooks))
+      const shelfsObj = arrangeShelfs(myBooks)
+      mapBookIDs(shelfsObj)
     }
 
     getMyBooks()

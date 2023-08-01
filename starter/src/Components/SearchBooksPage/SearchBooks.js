@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+// Components
 import Book from "../Book";
 
 import * as BooksAPI from "../../BooksAPI"
@@ -12,24 +13,26 @@ const SearchBooks = ({ bookidMappings, OnBookshelfChange }) => {
   const updateResults = (query) => {
     const performSearch = async () => {
       const res = await BooksAPI.search(query, 20)
-      console.log(res)
 
       if (Array.isArray(res)) {
         const resBooks = res.map(book => {
           return {
             id: book.id,
             title: book.title,
-            authors: book.authors,
-            shelf: "none",
-            imageURL: book.imageLinks.thumbnail
+            authors: book.authors ?? [],
+            shelf: bookidMappings[book.id] ?? "none",
+            imageURL: book.imageLinks?.thumbnail
           }
         })
+
+        console.log(resBooks)
+
         SetBookResults(resBooks)
       }
     }
 
     if (query !== "") performSearch()
-    SetQuery(query.trim())
+    SetQuery(query)
   }
 
   return (

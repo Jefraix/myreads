@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+
+// Components
 import Bookshelf from "./Bookshelf"
-//amogus
+
 const ListBooks = ({ shelfs, OnBookshelfChange }) => {
   return (
     <div className="list-books">
