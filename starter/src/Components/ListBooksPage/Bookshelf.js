@@ -1,6 +1,12 @@
 // Components
 import Book from "../Book"
 
+/**
+* @description Holds a set of books belonging to the shelf
+* @param {string} title - The name of the shelf
+* @param {Object Array} Books - Array of objects representing books that belong in this shelf
+* @param {function} OnBookshelfChange - Function that triggers to propagate state change
+*/
 const Bookshelf = ({ title, Books = [], OnBookshelfChange }) => {
 
   return (
@@ -11,7 +17,7 @@ const Bookshelf = ({ title, Books = [], OnBookshelfChange }) => {
           {Books.map((book, idx) => {
             return (
               <li key={idx}>
-                <Book 
+                <Book
                   Book={book}
                   OnBookshelfChange={OnBookshelfChange}
                 />

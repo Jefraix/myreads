@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 // Components
 import Bookshelf from "./Bookshelf"
 
+/**
+* @description Represents the root page
+* @param {Object} shelfs - Object containing every set of books for every shelf
+* @param {function} OnBookshelfChange - Function that triggers to propagate state change
+*/
 const ListBooks = ({ shelfs, OnBookshelfChange }) => {
   return (
     <div className="list-books">
@@ -11,18 +16,18 @@ const ListBooks = ({ shelfs, OnBookshelfChange }) => {
       </div>
       <div className="list-books-content">
         <div>
-        <Bookshelf 
-            title="Currently Reading" 
+        <Bookshelf
+            title="Currently Reading"
             Books={shelfs['currentlyReading']}
             OnBookshelfChange={OnBookshelfChange}
           />
-          <Bookshelf 
-            title="Want To Read" 
+          <Bookshelf
+            title="Want To Read"
             Books={shelfs['wantToRead']}
             OnBookshelfChange={OnBookshelfChange}
           />
-          <Bookshelf 
-            title="Read" 
+          <Bookshelf
+            title="Read"
             Books={shelfs['read']}
             OnBookshelfChange={OnBookshelfChange}
           />
