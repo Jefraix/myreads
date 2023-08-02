@@ -22,7 +22,7 @@ const BookshelfChanger = ({ currentBookshelf, OnBookshelfChangerChange }) => {
         value={currentBookshelf}
         onChange={onSelectChange}
       >
-        <option value="none" disabled>
+        <option value="nothing" disabled>
           Move to...
         </option>
         <option value="currentlyReading">
