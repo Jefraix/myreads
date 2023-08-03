@@ -1,11 +1,11 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom"
+import { useState, useEffect } from "react"
 import * as BooksAPI from "./BooksAPI"
 
 // Components
 import SearchBooks from "./Components/SearchBooksPage/SearchBooks"
-import ListBooks from "./Components/ListBooksPage/ListBooks";
+import ListBooks from "./Components/ListBooksPage/ListBooks"
 
 function App() {
   localStorage.token = "jaguilera-udacity"
@@ -25,7 +25,18 @@ function App() {
       read: [],
     }
 
-    books.forEach(book => shelfsObj[book.shelf].push(book));
+    books.forEach(book => {
+      const simpleBook = {
+        id: book.id,
+        title: book.title,
+        authors: book.authors ?? [],
+        shelf: book.shelf,
+        imageURL: book.imageLinks?.thumbnail
+      }
+
+      shelfsObj[book.shelf].push(simpleBook)
+    });
+
     SetShelfs(shelfsObj);
 
     return shelfsObj;
@@ -137,18 +148,7 @@ function App() {
     const getMyBooks = async () => {
       const books = await BooksAPI.getAll();
 
-      // Here we simplify the object to include only necessary information
-      const myBooks = books.map(book => {
-        return {
-          id: book.id,
-          title: book.title,
-          authors: book.authors ?? [],
-          shelf: book.shelf,
-          imageURL: book.imageLinks?.thumbnail
-        };
-      });
-
-      const shelfsObj = arrangeShelfs(myBooks);
+      const shelfsObj = arrangeShelfs(books);
       mapBookIDs(shelfsObj);
     }
 
