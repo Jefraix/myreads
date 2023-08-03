@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom"
+import { useState } from "react"
+import PropTypes from "prop-types"
 
 // Components
-import Book from "../Book";
+import Book from "../Book"
 
 import * as BooksAPI from "../../BooksAPI"
 
@@ -85,6 +86,11 @@ const SearchBooks = ({ bookidMappings, OnBookshelfChange }) => {
       </div>
     </div>
   )
+}
+
+SearchBooks.propTypes = {
+  bookidMappings: PropTypes.object.isRequired,
+  OnBookshelfChange: PropTypes.func.isRequired,
 }
 
 export default SearchBooks;

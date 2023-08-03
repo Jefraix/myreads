@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 // Components
 import BookCover from "./BookCover"
 import BookshelfChanger from "./BookshelfChanger"
@@ -34,6 +36,11 @@ const Book = ({ Book, OnBookshelfChange }) => {
       </div>
     </div>
   );
+}
+
+Book.propTypes = {
+  Book: PropTypes.object.isRequired,
+  OnBookshelfChange: PropTypes.func.isRequired,
 }
 
 export default Book

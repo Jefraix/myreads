@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import PropTypes from 'prop-types'
 
 // Components
 import Bookshelf from "./Bookshelf"
@@ -16,7 +17,7 @@ const ListBooks = ({ shelfs, OnBookshelfChange }) => {
       </div>
       <div className="list-books-content">
         <div>
-        <Bookshelf
+          <Bookshelf
             title="Currently Reading"
             Books={shelfs['currentlyReading']}
             OnBookshelfChange={OnBookshelfChange}
@@ -38,6 +39,11 @@ const ListBooks = ({ shelfs, OnBookshelfChange }) => {
       </div>
     </div>
   )
+}
+
+ListBooks.propTypes = {
+  shelfs: PropTypes.object.isRequired,
+  OnBookshelfChange: PropTypes.func.isRequired
 }
 
 export default ListBooks;
